@@ -1,0 +1,232 @@
+your bhashan - 
+My project follows MVC architecture.
+The View layer is console-based using Main.java.
+The Controller layer is handled by BankService, which contains all business rules.
+The Model layer consists of POJO classes, DAO classes
+I used JDBC transactions to ensure ACID properties during money transfer, and Java file handling to generate receipts.
+
+
+
+DB SCHEMA
+=======================================================
+=======================================================
+CREATE DATABASE BankManagementDB;
+USE BankManagementDB;
+
+
+
+Customer Table
+===================
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    PhoneNumber VARCHAR(15),
+    Address TEXT,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+BankAccount Table
+=====================
+CREATE TABLE BankAccounts (
+    AccountNumber BIGINT PRIMARY KEY,
+    CustomerID INT,
+    AccountType ENUM('Savings', 'Current', 'Business') NOT NULL,
+    Balance DECIMAL(15, 2) DEFAULT 0.00,
+    Status ENUM('Active', 'Closed', 'Suspended') DEFAULT 'Active',
+    OpeningDate DATE NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) ON DELETE CASCADE
+);
+
+
+
+
+Transactions Table
+=====================
+CREATE TABLE Transactions (
+    TransactionID INT AUTO_INCREMENT PRIMARY KEY,
+    AccountNumber BIGINT,
+    TransactionType ENUM('Deposit', 'Withdrawal', 'Transfer') NOT NULL,
+    Amount DECIMAL(15, 2) NOT NULL,
+    TransactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    RelatedAccountNumber BIGINT DEFAULT NULL, -- Used for Transfers
+    Description VARCHAR(255),
+    FOREIGN KEY (AccountNumber) REFERENCES BankAccounts(AccountNumber) ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+PROJECT STRUCTURE
+=======================================================
+=======================================================
+Approach 1
+src/
+ ├── model/
+ │   ├── Customer.java
+ │   ├── Account.java
+ │   └── Transaction.java
+ ├── dao/
+ │   ├── CustomerDAO.java
+ │   ├── AccountDAO.java
+ │   └── TransactionDAO.java
+ ├── service/
+ │   └── BankService.java
+ ├── util/
+ │   └── DBUtil.java
+ ├── exception/
+ │   ├── InvalidAmountException.java
+ │   ├── InsufficientBalanceException.java
+ │   └── AccountNotFoundException.java
+ ├── file/
+ │   └── ReceiptGenerator.java
+ └── Main.java
+
+
+
+
+Approach 2
+VIEW
+ └── Main.java
+        ↓
+CONTROLLER
+ └── BankService.java
+        ↓
+MODEL
+ ├── Customer.java
+ ├── Account.java
+ ├── Transaction.java
+ ├── DAO classes
+ └── MySQL DB
+
+
+
+explanation
+MVC = Model + View + Controller
+
+It is NOT a framework.
+It is a design pattern (way of organizing code).
+
+Example - Restaurant
+Kitchen		Model
+Waiter		Controller
+Menu Card	View
+
+
+
+Model = Data + Business Logic
+it knows HOW things work
+
+In the project:
+Customer.java
+Account.java
+Transaction.java
+
+DAO classes
+Service classes
+
+
+
+View = User Interface
+View knows HOW things look
+
+In this project:
+Main.java
+Console output
+Scanner input
+
+
+
+Controller = Middleman
+Takes request from View
+Calls Model
+Returns response to View
+
+
+BankService acts as Controller
+
+
+
+
+
+
+Exception handling flow
+=======================================================
+=======================================================
+DAO
+ └── throws SQLException
+        ↓
+Service Layer
+ ├── decides rollback
+ ├── converts to custom exception
+ └── meaningful message
+        ↓
+Main.java
+ └── shows message to user
+
+
+
+
+
+
+
+
+
+=======================================================
+=======================================================
+Model classes (data representation)
+1. Customer 
+2. Account
+3. Transaction
+
+
+DAO classes (these classes will talk to DB)
+1. CustomerDAO
+2. AccountDAO
+3. TransactionDAO
+
+
+Service classes (business logic)
+1. BankService	- This class will use AccountDAO class, Transaction class and Receipt generator class.
+
+
+File handling classes  (receipt generation)
+ReceiptGenerator
+
+
+
+Utility classes  (DB configuration)
+DBUtil
+
+
+Exception classes
+1. InvalidAmountException (amount < 0)
+2. InsufficientBalanceException (withdraw_amount > balance)
+3. AccountNotFoundException
+
+
+
+Main class
+shows the menu, creates BankService object to facilitate all the services displayed in menu.
+
+
+=======================================================
+=======================================================
+
+
+1. Create New Account
+2. Close Account
+3. Withdraw Money
+4. Deposit Money
+5. Transfer Money
+6. Transaction History
+7. View Account Details
+8. Update Account Details
+9. Exit

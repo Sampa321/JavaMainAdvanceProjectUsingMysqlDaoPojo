@@ -11,6 +11,8 @@ public class Transaction {
     private long relatedAccountNumber;
     private  String description;
 
+
+
     public Transaction(long accountNumber, String transactionType, double amount, LocalDateTime transactionDate, long relatedAccountNumber, String description) {
         this.accountNumber = accountNumber;
         this.transactionType = transactionType;
@@ -18,6 +20,10 @@ public class Transaction {
         this.transactionDate = transactionDate;
         this.relatedAccountNumber = relatedAccountNumber;
         this.description = description;
+    }
+
+    public void setTransactionID(int transactionID) {
+        this.transactionID = transactionID;
     }
 
     public long getAccountNumber() {

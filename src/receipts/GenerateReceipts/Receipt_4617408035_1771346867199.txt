@@ -1,0 +1,6 @@
+========================== GG BANK ==========================
+Date of transaction : 2026-02-17T22:17:47.153204700
+Transaction Type    : Withdrawal
+Amount              : ₹10.0
+Description         : Withdrawal from account
+=================================================================

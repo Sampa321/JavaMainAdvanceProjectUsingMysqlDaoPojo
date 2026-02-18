@@ -1,0 +1,6 @@
+========================== GG BANK ==========================
+Date of transaction : 2026-02-17T21:50:45.607462300
+Transaction Type    : Deposit
+Amount              : ₹800.0
+Description         : Deposit to account
+=================================================================

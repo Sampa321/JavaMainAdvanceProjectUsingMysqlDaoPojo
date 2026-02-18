@@ -1,5 +1,6 @@
 package dao;
 
+import exception.AccountNotFoundException;
 import model.Account;
 import util.DBUtil;
 
@@ -30,7 +31,7 @@ public class AccountDAO {
         return true;
     }
 
-    public Account getAccount(Long accountNumber) throws SQLException
+    public Account getAccount(Long accountNumber) throws SQLException,AccountNotFoundException
     {
         //sql query preparation
         String sql = "SELECT * FROM bankAccounts WHERE AccountNumber = ?";  //simply reading the data not modify
@@ -38,14 +39,20 @@ public class AccountDAO {
 
         //create connection, prepare the sql statement for execution
         try(Connection connection  = DBUtil.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);) {
+            PreparedStatement ps = connection.prepareStatement(sql);)
+         {
             ps.setLong(1, accountNumber);
 
             //execute the query
             ResultSet record = ps.executeQuery(); //for read use executeQuery() and resultset is a interface , this will store the row return by the DBMS of ResultSet upon execution of SQL statement
 
+
             //extract details from the result set and create an object of account class
-            record.next();
+             boolean flag = record.next();
+             if (!flag)
+             {
+                 throw new AccountNotFoundException("Account does not exists at GG Bank!!");
+             }
             Account obj = new Account(
                     record.getLong("AccountNumber"),
                     record.getInt("CustomerId"),
@@ -79,6 +86,18 @@ public class AccountDAO {
             ps.setDouble(1,acc.getBalance());
             ps.setLong(2,acc.getAccountNumber());
             ps.executeUpdate();
+        }
+    }
+
+    public boolean transactionUpdateBalance(Account acc,Connection conn) throws SQLException{
+        String sql = "UPDATE bankAccounts SET Balance = ? WHERE AccountNumber = ?";
+        try(PreparedStatement ps = conn.prepareStatement(sql);
+        )
+        {
+            ps.setDouble(1, acc.getBalance());
+            ps.setLong(2, acc.getAccountNumber());
+            return ps.executeUpdate() > 0;
+
         }
     }
 }

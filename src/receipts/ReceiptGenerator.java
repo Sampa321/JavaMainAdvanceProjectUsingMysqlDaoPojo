@@ -23,11 +23,17 @@ public class ReceiptGenerator {
               writer.newLine();
               writer.write("Transaction Type    : "+t.getTransactionType());
               writer.newLine();
-              if(t.getTransactionType().equals("Transfer"))
+              if(t.getTransactionType().equals("Transfer") && t.getDescription().equalsIgnoreCase("Withdrawal from account"))
               {
-                  writer.write("From                    : "+t.getRelatedAccountNumber());
+                  writer.write("From(your Account)  : "+t.getAccountNumber());
                   writer.newLine();
-                  writer.write("To(your Account)         : "+t.getAccountNumber());
+                  writer.write("To                  : "+t.getRelatedAccountNumber());
+                  writer.newLine();
+              }
+              else{
+                  writer.write("From                : "+t.getRelatedAccountNumber());
+                  writer.newLine();
+                  writer.write("To(your Account)    : "+t.getAccountNumber());
                   writer.newLine();
               }
               writer.write("Amount              : ₹"+t.getAmount());

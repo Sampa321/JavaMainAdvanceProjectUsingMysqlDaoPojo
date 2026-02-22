@@ -1,0 +1,8 @@
+========================== GG BANK ==========================
+Date of transaction : 2026-02-22T19:27:00.361074200
+Transaction Type    : Transfer
+From                  : 1896877786
+To(your Account)     : 1083979780
+Amount              : ₹200.0
+Description         : Deposit to account via transfer
+=================================================================

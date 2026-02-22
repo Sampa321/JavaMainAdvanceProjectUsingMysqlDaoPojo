@@ -35,8 +35,18 @@ public class Main {
                    String lname = sc.nextLine();
                    System.out.print("Enter Account holder's email       : ");
                    String email = sc.nextLine();
+                   while(!email.contains("@gmail.com"))
+                    {
+                        System.out.print("Enter tha correct email address    : ");
+                        email = sc.nextLine();
+                    }
                    System.out.print("Enter Account holder's phone number : ");
                    String pno = sc.nextLine();
+                   while (pno.length() != 10)
+                   {
+                       System.out.print("Please enter correct phone Number :");
+                       pno = sc.nextLine();
+                   }
                    System.out.print("Enter Account holder's address      : ");
                    String address = sc.nextLine();
                    service.createAccount(firstName, lname, email, pno, address);
@@ -85,7 +95,7 @@ public class Main {
                    boolean checkPhoneNumber = service.checkPhoneNumber(phoneNumber);
                    while (!checkPhoneNumber)
                    {
-                       System.out.println("Please enter the correct Account Number !!");
+                       System.out.print("Please enter the correct phone Number !!");
                        phoneNumber = sc.next();
                        checkPhoneNumber = service.checkPhoneNumber(phoneNumber);
                    }
@@ -113,6 +123,10 @@ public class Main {
                            case 'c':
                                System.out.print("Enter email : ");
                                email = sc.nextLine();
+                               while(!email.contains("@gmail.com")) {
+                                   System.out.println("Enter tha correct email address    : ");
+                                   email = sc.nextLine();
+                               }
                                service.updateEmail(email,phoneNumber);
                                break;
                            case 'd':

@@ -225,7 +225,7 @@ public class BankService {
                      boolean senderAccountUpdateState = accountDAO.transactionUpdateBalance(senderAcc,conn);
 
                      //long accountNumber, String transactionType, double amount, LocalDateTime transactionDate, long relatedAccount, String description
-                     Transaction t1 = new Transaction(accNumber,"Transfer",amount, LocalDateTime.now(),reAccNumber,"Withdrawal from account for transfer");
+                     Transaction t1 = new Transaction(accNumber,"Transfer",amount, LocalDateTime.now(),reAccNumber,"Withdrawal from account");
                      transactionDAO.addTransferTransaction(t1,conn);
 
 

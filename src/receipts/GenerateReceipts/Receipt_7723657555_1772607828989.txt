@@ -1,0 +1,7 @@
+========================== GG BANK ==========================
+Date of transaction : 2026-03-04T12:33:48.917740600
+Transaction Type    : Deposit
+Account Number : 7723657555
+Amount              : ₹1000.0
+Description         : Deposit to account
+=================================================================

@@ -23,22 +23,28 @@ public class ReceiptGenerator {
               writer.newLine();
               writer.write("Transaction Type    : "+t.getTransactionType());
               writer.newLine();
-              if(t.getTransactionType().equals("Transfer") && t.getDescription().equalsIgnoreCase("Withdrawal from account"))
+              if(t.getTransactionType().equals("Transfer"))
               {
-                  writer.write("From(your Account)  : "+t.getAccountNumber());
-                  writer.newLine();
-                  writer.write("To                  : "+t.getRelatedAccountNumber());
+                  if(t.getDescription().equalsIgnoreCase("Withdrawal from account")) {
+                      writer.write("From(your Account)     : "+t.getAccountNumber());
+                      writer.newLine();
+                      writer.write("To                : "+t.getRelatedAccountNumber());
+                      writer.newLine();
+                  }
+                  else{
+                      writer.write("From            : "+t.getRelatedAccountNumber());
+                      writer.newLine();
+                      writer.write("To(your Account)       : "+t.getAccountNumber());
+                      writer.newLine();
+                  }
+              }
+              else {
+                  writer.write("Account Number         : "+t.getAccountNumber());
                   writer.newLine();
               }
-              else{
-                  writer.write("From                : "+t.getRelatedAccountNumber());
-                  writer.newLine();
-                  writer.write("To(your Account)    : "+t.getAccountNumber());
-                  writer.newLine();
-              }
-              writer.write("Amount              : ₹"+t.getAmount());
+              writer.write("Amount                       : ₹"+t.getAmount());
               writer.newLine();
-              writer.write("Description         : "+t.getDescription());
+              writer.write("Description              : "+t.getDescription());
               writer.newLine();
               writer.write("=================================================================");
           }

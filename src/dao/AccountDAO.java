@@ -28,8 +28,9 @@ public class AccountDAO {
                 return false;  //not create bank acc
             }
         }
-        return true;
+        return true;  //Account create successfully
     }
+
 
     public Account getAccount(Long accountNumber) throws SQLException,AccountNotFoundException
     {
@@ -46,13 +47,13 @@ public class AccountDAO {
             //execute the query
             ResultSet record = ps.executeQuery(); //for read use executeQuery() and resultset is a interface , this will store the row return by the DBMS of ResultSet upon execution of SQL statement
 
-
             //extract details from the result set and create an object of account class
              boolean flag = record.next();
              if (!flag)
              {
                  throw new AccountNotFoundException("Account does not exists at GG Bank!!");
              }
+             //Load those details into an object of Account type and return this object.
             Account obj = new Account(
                     record.getLong("AccountNumber"),
                     record.getInt("CustomerId"),
@@ -98,6 +99,38 @@ public class AccountDAO {
             ps.setLong(2, acc.getAccountNumber());
             return ps.executeUpdate() > 0;
 
+        }
+    }
+
+
+    public Account getAccountNumber(int customerId) throws AccountNotFoundException,SQLException
+    {
+        String sql = "SELECT * FROM bankAccounts WHERE CustomerID = ?";
+        //create connection, prepare the sql statement for execution
+        try(Connection connection  = DBUtil.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);)
+        {
+            ps.setLong(1,customerId);
+
+            //execute the query
+            ResultSet record = ps.executeQuery(); //for read use executeQuery() and resultset is a interface , this will store the row return by the DBMS of ResultSet upon execution of SQL statement
+
+
+            //extract details from the result set and create an object of account class
+            boolean flag = record.next();
+            if (!flag)
+            {
+                throw new AccountNotFoundException("Account does not exists at GG Bank!!");
+            }
+            Account obj = new Account(
+                    record.getLong("AccountNumber"),
+                    record.getInt("CustomerId"),
+                    record.getString("AccountType"),
+                    record.getDouble("Balance"),
+                    record.getString("Status"),
+                    record.getDate("OpeningDate").toLocalDate()
+            );
+            return obj;
         }
     }
 }

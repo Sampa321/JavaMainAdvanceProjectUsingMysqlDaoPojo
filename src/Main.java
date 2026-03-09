@@ -50,7 +50,6 @@ public class Main {
                         pno = sc.nextLine();
                     }
                     System.out.print("Enter Account holder's Pan  number      : ");
-                    System.out.print("                                     : ");
                     Long panNumber = sc.nextLong();
                     while (panNumber == 0) {
                         System.out.print("Please enter correct pan Number         : ");
@@ -78,16 +77,26 @@ public class Main {
                     String email1 = sc.nextLine();
                     System.out.print("Enter your password                     : ");
                     String password1 = sc.nextLine();
-                    while ((service.checkEmail(email1) < 0 || service.checkPassword(password1) < 0) && (service.checkPassword(password1) != service.checkEmail(email1))) {
+                    int checkEmailID = service.checkEmail(email1);
+                    int checkPasswordId = service.checkPassword(password1);
+//                    System.out.println(checkPasswordId);
+//                    System.out.println(checkEmailID);
+                    while (checkEmailID <= 0 || checkPasswordId <= 0) {
                         System.out.println("Any error email or password!!");
                         System.out.print("Enter the correct email                 : ");
                         email1 = sc.nextLine();
+                        checkEmailID = service.checkEmail(email1);
                         System.out.print("Enter the correct password              : ");
                         password1 = sc.nextLine();
+                        checkPasswordId = service.checkPassword(password1);
                     }
-                    int customerId = service.checkEmail(email1);
-                    System.out.println(customerId);
-                    System.out.println(service.checkPassword(password1));
+                   int customerId = checkEmailID;
+                    if(customerId >0)
+                    {
+                        System.out.println("Customer's email and password are correct!!");
+                    }
+//                    System.out.println(customerId);
+//                    System.out.println(service.checkPassword(password1));
                     long bankAccNumber = service.getAccountNumber(customerId);
                     do{
                         System.out.println("\n=========================================");
@@ -110,7 +119,6 @@ public class Main {
                         System.out.println("=============================================");
                         switch (choice) {
                             case 1:
-                                sc.nextLine();
                                 System.out.print("Enter new Password                      : ");
                                 password = sc.nextLine();
                                 while (password.isEmpty()) {

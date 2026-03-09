@@ -97,7 +97,7 @@ public class BankService {
             int customerId = acc.getCustomerID();
             customerDAO.updatePassword(password,customerId);
             System.out.println("password update successfully!");
-        }catch (AccountNotFoundException | SQLException e)
+        }catch(AccountNotFoundException | SQLException e)
         {
             System.out.println("Error : "+e.getMessage());
         }
@@ -362,8 +362,14 @@ public class BankService {
                     System.out.println("Transaction Type    : "+t.getTransactionType());
                     if(t.getTransactionType().equals("Transfer"))
                     {
-                        System.out.println("From                    : "+t.getRelatedAccountNumber());
-                        System.out.println("To(your)                : "+t.getAccountNumber());
+                        if(t.getDescription().equalsIgnoreCase("Withdrawal from account"))
+                        {
+                            System.out.println("From(your)          : "+t.getAccountNumber());
+                            System.out.println("To                  : "+t.getRelatedAccountNumber());
+                        }else {
+                            System.out.println("From                : "+t.getRelatedAccountNumber());
+                            System.out.println("To(your)            : "+t.getAccountNumber());
+                        }
                     }
                     System.out.println("Amount              : ₹"+t.getAmount());
                     System.out.println("Description         : "+t.getDescription());

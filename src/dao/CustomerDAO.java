@@ -85,6 +85,7 @@ public class CustomerDAO {
                     record.getString("Address"),
                     record.getString("CustomerPassword")
             );
+            obj.setCustomerID(record.getInt("CustomerID"));
             return obj;
         }
     }
@@ -121,6 +122,7 @@ public class CustomerDAO {
                     record.getString("Address"),
                     record.getString("CustomerPassword")
             );
+            obj.setCustomerID(record.getInt("CustomerID"));
             return obj;
         }
     }

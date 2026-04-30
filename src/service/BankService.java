@@ -189,7 +189,7 @@ public class BankService {
                  //Call AccountDao object to update the balance field in the DB by using the Account object.
                 accountDAO.updateBalance(acc);
 
-                //long accountNumber, String transactionType, double amount, LocalDateTime transactionDate, long relatedAccount, String description
+                //If update is successful, then create a new record in the transaction table and generate a receipt.
                 Transaction t = new Transaction(accNumber,"Withdrawal",amount, LocalDateTime.now(),0,"Withdrawal from account");
                 transactionDAO.addTransaction(t);
 

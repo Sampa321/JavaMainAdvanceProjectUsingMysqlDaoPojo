@@ -22,7 +22,7 @@ public class TransactionDAO {
             ps.setLong(5,t.getRelatedAccountNumber());
         }
         else {
-            ps.setNull(5, Types.BIGINT);
+            ps.setNull(5,Types.BIGINT);
         }
         ps.setString(6,t.getDescription());
         ps.executeUpdate();

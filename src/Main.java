@@ -1,10 +1,9 @@
 import service.BankService;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String []args) {
         BankService service = new BankService();
         Scanner sc = new Scanner(System.in);
         int choice;
